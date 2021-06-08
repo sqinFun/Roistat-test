@@ -1,14 +1,21 @@
 <template>
  <div class="container">
-    <BaseButton
-      @click="showAddContactModal"
-    >Добавить контакт</BaseButton>
-    <BaseButton
-      @click="getDemoContacts"
-    >Деме данные</BaseButton>
+    <div class="button-list">
+      <BaseButton
+        @click="showAddContactModal"
+      >
+        Добавить контакт
+      </BaseButton>
+      <BaseButton
+        @click="getDemoContacts"
+      >
+        Демо данные
+      </BaseButton>
+    </div>
     <ContactsTable />
     <BaseModal
       v-if="isShowAddContactModal"
+      title="Добавить контакт"
       modalClass="--full"
       @close="unshowAddContactModal"
     >
@@ -45,3 +52,12 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.button-list
+  margin: 30px 0
+  & > * + *
+    margin-left: 30px
+
+
+</style>

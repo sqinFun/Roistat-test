@@ -109,9 +109,9 @@ export default {
     addContact(state, contact) {
       let hasPaent = contact.parent ?? false
       let formatContact = {
+        ...contact,
         // конечно же так делать нельзя
         id: Date.now(),
-        ...contact,
         children: [],
       }
 
