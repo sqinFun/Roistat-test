@@ -72,13 +72,9 @@ export default {
       }
 
       let addNestedContact = (contacts) => {
-        console.log('contacts',contacts)
         contacts.find((nestedContact) => {
-          console.log(nestedContact.children?.length, nestedContact)
           if(String(nestedContact.id) === String(contact.parent)) {
-            nestedContact.children = nestedContact.children?.length
-              ? [...nestedContact.children, formatContact]
-              : nestedContact.children = [formatContact]
+            nestedContact.children = [...nestedContact.children, formatContact]
             return true
           }
           if(nestedContact.children?.length)
