@@ -107,7 +107,7 @@ export default {
   },
   mutations: {
     addContact(state, contact) {
-      let hasPaent = contact.parent ?? false
+      let hasParent = contact.parent ?? false
       let formatContact = {
         ...contact,
         // конечно же так делать нельзя
@@ -126,7 +126,7 @@ export default {
         })
       }
 
-      if(hasPaent) {
+      if(hasParent) {
         addNestedContact(state.contacts)
       } else {
         state.contacts.push(formatContact)
