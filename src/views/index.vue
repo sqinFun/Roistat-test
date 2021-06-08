@@ -6,23 +6,26 @@
     <ContactsTable />
     <BaseModal
       v-if="isShowAddContactModal"
+      modalClass="--full"
       @close="unshowAddContactModal"
     >
-      hello
+      <ContactsFormAdd />
     </BaseModal>
  </div>
 </template>
 
 <script>
 import ContactsTable from '@/components/ContactsTable'
+import ContactsFormAdd from '@/components/ContactsFormAdd'
 
 export default {
   name: 'index',
   components: {
     ContactsTable,
+    ContactsFormAdd,
   },
   data: () => ({
-    isShowAddContactModal: false,
+    isShowAddContactModal: true,
   }),
   methods: {
     showAddContactModal() {

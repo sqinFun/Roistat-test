@@ -10,9 +10,9 @@
     </div>
     <template v-if="contactChildren.length">
       <ContactsTableRow
-      class="--nested"
-      v-for="subcontact in contactChildren" :key="subcontact.id"
-      :contact="subcontact"
+        class="--nested"
+        v-for="subcontact in contactChildren" :key="subcontact.id"
+        :contact="subcontact"
       />
     </template>
   </div>

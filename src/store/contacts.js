@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 const MOCK_CONTACTS = [
   {
     id: 1,
@@ -19,12 +21,8 @@ const MOCK_CONTACTS = [
             id: 4,
             name: '3 - Имя4',
             phone: '+7',
+            children: []
           },
-          {
-            id: 5,
-            name: '3 - Имя5',
-            phone: '+7',
-          }
         ],
       }
     ],
@@ -35,5 +33,64 @@ export default {
   namespaced: true,
   state: {
     contacts: MOCK_CONTACTS,
+  },
+  getters: {
+    contactsWithoutNesting(state) {
+      let cloneContacts = _.cloneDeep(state.contacts)
+      let contactArray = []
+      let pushContact = (contacts) => {
+        contacts.forEach(contact => {
+          contactArray.push({
+            id: contact.id,
+            name: contact.name,
+            phone: contact.phone,
+          })
+          if(contact.children?.length)
+            pushContact(contact.children)
+        })
+      }
+
+      pushContact(cloneContacts)
+
+      return contactArray
+    }
+  },
+  actions: {
+    addContact({commit}, contact) {
+      commit('addContact', contact)
+      console.log()
+    }
+  },
+  mutations: {
+    addContact(state, contact) {
+      let hasPaent = contact.parent ?? false
+      let formatContact = {
+        // конечно же так делать нельзя
+        id: Date.now(),
+        ...contact,
+        children: [],
+      }
+
+      let addNestedContact = (contacts) => {
+        console.log('contacts',contacts)
+        contacts.find((nestedContact) => {
+          console.log(nestedContact.children?.length, nestedContact)
+          if(String(nestedContact.id) === String(contact.parent)) {
+            nestedContact.children = nestedContact.children?.length
+              ? [...nestedContact.children, formatContact]
+              : nestedContact.children = [formatContact]
+            return true
+          }
+          if(nestedContact.children?.length)
+            return addNestedContact(nestedContact.children)
+        })
+      }
+
+      if(hasPaent) {
+        addNestedContact(state.contacts)
+      } else {
+        state.contacts.push(formatContact)
+      }
+    },
   }
 }

@@ -4,7 +4,7 @@
       ref="modal"
       @click.self="$emit('close')"
     >
-      <div class="modal">
+      <div :class="['modal', modalClass]">
         <slot></slot>
       </div>
     </div>
@@ -13,6 +13,13 @@
 
 <script>
 export default {
+  props: {
+    name: String,
+    modalClass: {
+      type: [String, Array],
+    },
+  },
+
   mounted() {
     this.appendModalToBody()
   },
@@ -50,9 +57,12 @@ export default {
 
   background: rgba(black, .6)
 .modal
+  cursor: auto
   max-width: 400px
   padding: 20px 30px
   border-radius: 4px
   background: white
+  &.--full
+    width: 100%
 
 </style>
