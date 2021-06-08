@@ -33,7 +33,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { required, alphaNum } from 'vuelidate/lib/validators'
+import { required } from 'vuelidate/lib/validators'
 
 export default {
   data: ()=> ({
@@ -60,7 +60,7 @@ export default {
   },
   validations: {
     contact: {
-      name: {required, alphaNum},
+      name: {required},
       phone: { 
         isPhone(phone) {
           return /\+7\s\(\d\d\d\)\s\d\d\d-\d\d-\d\d/.test(phone)
