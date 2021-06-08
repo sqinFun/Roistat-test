@@ -8,6 +8,12 @@ const MOCK_CONTACTS = [
     children: [],
   },
   {
+    id: 11123,
+    name: 'Имя3',
+    phone: '+7123465',
+    children: [],
+  },
+  {
     id: 2,
     name: 'Имя2',
     phone: '+764646',
@@ -21,12 +27,24 @@ const MOCK_CONTACTS = [
             id: 4,
             name: '3 - Имя4',
             phone: '+7',
-            children: []
+            children: [],
+          },
+          {
+            id: 412142,
+            name: '3 - Имя3',
+            phone: '+7',
+            children: [],
           },
         ],
       }
     ],
-  }
+  },
+  {
+    id: 124,
+    name: 'имя1',
+    phone: '+7123465',
+    children: [],
+  },
 ]
 
 export default {
