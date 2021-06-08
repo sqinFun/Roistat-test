@@ -2,37 +2,43 @@ import _ from 'lodash'
 
 const MOCK_CONTACTS = [
   {
-    id: 1,
-    name: 'Имя',
-    phone: '+7123465',
+    id: 4124,
+    name: 'Имя2',
+    phone: '+7 (311) 111-11-11',
     children: [],
   },
   {
-    id: 11123,
+    id: 12,
+    name: 'Имя1',
+    phone: '+7 (111) 111-11-11',
+    children: [],
+  },
+  {
+    id: 512351,
     name: 'Имя3',
-    phone: '+7123465',
+    phone: '+7 (211) 111-11-11',
     children: [],
   },
   {
     id: 2,
     name: 'Имя2',
-    phone: '+764646',
+    phone: '+7 (211) 111-11-11',
     children: [
       {
         id: 3,
         name: '2 - Имя3',
-        phone: '+7',
+        phone: '+7 (211) 111-11-11',
         children: [
           {
             id: 4,
-            name: '3 - Имя4',
-            phone: '+7',
+            name: 'Имя2',
+            phone: '+7 (411) 111-11-11',
             children: [],
           },
           {
             id: 412142,
-            name: '3 - Имя3',
-            phone: '+7',
+            name: 'Имя1',
+            phone: '+7 (111) 111-11-11',
             children: [],
           },
         ],
@@ -42,7 +48,13 @@ const MOCK_CONTACTS = [
   {
     id: 124,
     name: 'имя1',
-    phone: '+7123465',
+    phone: '+7 (811) 111-11-11',
+    children: [],
+  },
+  {
+    id: 641,
+    name: 'Имя1.2',
+    phone: '+7 (211) 111-11-11',
     children: [],
   },
 ]
@@ -50,7 +62,7 @@ const MOCK_CONTACTS = [
 export default {
   namespaced: true,
   state: {
-    contacts: MOCK_CONTACTS,
+    contacts: [],
   },
   getters: {
     contactsWithoutNesting(state) {
@@ -74,9 +86,23 @@ export default {
     }
   },
   actions: {
-    addContact({commit}, contact) {
+    addContact({commit, dispatch}, contact) {
       commit('addContact', contact)
-      console.log()
+      // Настоящий запрос я бы выполнил первым
+      // а тут у нас клиент как источник истины
+      dispatch('setContactInLocalStorage')
+    },
+    setContactInLocalStorage({state}) {
+      localStorage.setItem('contacts', JSON.stringify(state.contacts))
+    },
+    getContactInLocalStorage({commit}) {
+      let contactList = localStorage.getItem('contacts')
+      if(contactList)
+        commit('setContactList', JSON.parse(contactList))
+    },
+    mockContacts({commit, state}) {
+      commit('setContactList', MOCK_CONTACTS)
+      localStorage.setItem('contacts', JSON.stringify(state.contacts))
     }
   },
   mutations: {
@@ -106,5 +132,8 @@ export default {
         state.contacts.push(formatContact)
       }
     },
+    setContactList(state, contacts) {
+      state.contacts = _.cloneDeep(contacts)
+    }
   }
 }

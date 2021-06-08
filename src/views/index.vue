@@ -3,6 +3,9 @@
     <BaseButton
       @click="showAddContactModal"
     >Добавить контакт</BaseButton>
+    <BaseButton
+      @click="getDemoContacts"
+    >Деме данные</BaseButton>
     <ContactsTable />
     <BaseModal
       v-if="isShowAddContactModal"
@@ -36,6 +39,9 @@ export default {
     unshowAddContactModal() {
       this.isShowAddContactModal = false
     },
+    getDemoContacts() {
+      this.$store.dispatch('contacts/mockContacts')
+    }
   }
 }
 </script>

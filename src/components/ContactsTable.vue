@@ -36,6 +36,9 @@ export default {
       return this.contacts
     }
   },
+  created() {
+    this.getContactList()
+  },
   methods: {
     contactsRecursionSort(contacts, field) {
       let sortedContacts = _.cloneDeep(contacts)
@@ -53,6 +56,9 @@ export default {
         this.activeSortField = null
       else
         this.activeSortField = sortField
+    },
+    getContactList() {
+      this.$store.dispatch('contacts/getContactInLocalStorage')
     }
   }
 
