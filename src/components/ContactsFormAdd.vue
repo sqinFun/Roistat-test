@@ -1,39 +1,44 @@
 <template>
-  <div>
-    <div class="form">
-      <BaseInput
-        title="Имя"
+  <div class="form">
+    <BaseInput
+      title="Имя"
 
-        v-model="contact.name"
-      />
-      <BaseInput
-        title="Телефон"
+      v-model.trim="contact.name"
 
-        v-model="contact.phone"
-      />
-      <BaseSelect
-        title="Начальник"
+      :error="$v.$dirty && $v.contact.name.$invalid"
+    />
+    <BaseInput
+      title="Телефон"
 
-        :option="contactsWithoutNesting"
-        v-model="contact.parent"
-      />
-      <BaseButton
-        @click="addContact"
-      >
-        Сохранить
-      </BaseButton>
-    </div>
+      v-model.trim="contact.phone"
+      placeholder="+7 (123) 456-78-90"
+      mask="+7 (###) ###-##-##"
+
+      :error="$v.$dirty && $v.contact.phone.$invalid"
+    />
+    <BaseSelect
+      title="Начальник"
+
+      :option="contactsWithoutNesting"
+      v-model.trim="contact.parent"
+    />
+    <BaseButton
+      @click="addContact"
+    >
+      Сохранить
+    </BaseButton>
   </div>
   
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { required, alphaNum } from 'vuelidate/lib/validators'
 
 export default {
   data: ()=> ({
     contact: {
-      name: 'Имя',
+      name: null,
       phone: null,
       parent: null,
     }
@@ -45,9 +50,23 @@ export default {
   },
   methods: {
     addContact() {
+      if(this.$v.$invalid) {
+        this.$v.$touch()
+        return
+      }
       this.$store.dispatch('contacts/addContact', this.contact)
     }
   },
+  validations: {
+    contact: {
+      name: {required, alphaNum},
+      phone: { 
+        isPhone(phone) {
+          return /\+7\s\(\d\d\d\)\s\d\d\d-\d\d-\d\d/.test(phone)
+        },
+      },
+    }
+  }
 
 }
 </script>
