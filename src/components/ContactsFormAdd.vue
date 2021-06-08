@@ -6,6 +6,7 @@
       v-model.trim="contact.name"
 
       :error="$v.$dirty && $v.contact.name.$invalid"
+      errorMessage="Обязательное поле"
     />
     <BaseInput
       title="Телефон"
@@ -15,6 +16,7 @@
       mask="+7 (###) ###-##-##"
 
       :error="$v.$dirty && $v.contact.phone.$invalid"
+      :errorMessage="getErrorMessage(!$v.contact.phone.required, 'Обязательное поле') || getErrorMessage(!$v.contact.phone.phone, 'Проверьте номер')"
     />
     <BaseSelect
       title="Начальник"
@@ -56,12 +58,19 @@ export default {
       }
       this.$store.dispatch('contacts/addContact', this.contact)
       this.$emit('send')
+    },
+    getErrorMessage(hasError, message) {
+      if(this.$v.$dirty && hasError) {
+        return message
+      }
+      return null
     }
   },
   validations: {
     contact: {
       name: {required},
-      phone: { 
+      phone: {
+        required,
         isPhone(phone) {
           return /\+7\s\(\d\d\d\)\s\d\d\d-\d\d-\d\d/.test(phone)
         },

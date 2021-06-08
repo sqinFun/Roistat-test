@@ -1,5 +1,5 @@
 <template>
-  <button @click="onClick">
+  <button class="button" @click="onClick">
     <slot></slot>
   </button>
 </template>
@@ -15,6 +15,17 @@ export default {
 }
 </script>
 
-<style>
+<style lang="sass" scoped>
+.button
+  padding: 10px 20px
+  border: none
+  background: #007bff
+  border-radius: 6px
+  color: white
+  cursor: pointer
+  transition: background .1s
+  &:hover,
+  &:active
+    background: #429af8
 
 </style>

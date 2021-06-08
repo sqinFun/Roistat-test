@@ -41,29 +41,17 @@ export default {
     &__row
       position: relative
       display: flex
-      border-bottom: 1px solid black
+      border-radius: 6px
+      margin-bottom: 1px
 
     &__cell
       position: relative
       padding: 10px
-      &::after
-        content: ''
-        position: absolute
-        right: 0
-        top: 0
-        width: 1px
-        height: 100%
+      border-radius: 6px
+      background: white
+      & + &
+        margin-left: 1px
 
-        background: black
-      &:first-child::before
-        content: ''
-        position: absolute
-        left: 0
-        top: 0
-        width: 1px
-        height: 100%
-
-        background: black
       &.--name
         flex-grow: 1
       &.--phone

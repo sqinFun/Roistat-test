@@ -27,7 +27,7 @@ export default {
     ContactsFormAdd,
   },
   data: () => ({
-    isShowAddContactModal: true,
+    isShowAddContactModal: false,
   }),
   methods: {
     showAddContactModal() {

@@ -1,5 +1,5 @@
 <template>
-  <label class="v-input">
+  <label :class="['v-input', {'--focus': isFocus}]">
     <p :class="['v-input__title', {'--error': error}]">
       {{title}}
     </p>
@@ -11,7 +11,12 @@
 
       :value="value"
       @input="input"
+      @focus="focus"
+      @blur="blur"
     >
+    <div class="v-input__error-modal" v-if="error && errorMessage">
+      <p class="v-input__error-text">{{errorMessage}}</p>
+    </div>
 
   </label>
 </template>
@@ -23,11 +28,23 @@ export default {
     value: [String, Number],
     placeholder: String,
     error: Boolean,
+    errorMessage: [String, Number],
     mask: String,
   },
+  data: ()=> ({
+    isFocus: false,
+  }),
   methods: {
     input(e) {
       this.$emit('input', e.target.value)
+    },
+    focus(e) {
+      this.isFocus = true
+      this.$emit('focus', e)
+    },
+    blur(e) {
+      this.isFocus = false
+      this.$emit('blur', e)
     }
   }
 }
