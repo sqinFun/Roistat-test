@@ -9,7 +9,9 @@
       modalClass="--full"
       @close="unshowAddContactModal"
     >
-      <ContactsFormAdd />
+      <ContactsFormAdd
+        @send="unshowAddContactModal"
+      />
     </BaseModal>
  </div>
 </template>

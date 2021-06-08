@@ -55,6 +55,7 @@ export default {
         return
       }
       this.$store.dispatch('contacts/addContact', this.contact)
+      this.$emit('send')
     }
   },
   validations: {
