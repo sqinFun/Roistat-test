@@ -42,7 +42,7 @@ export default {
   methods: {
     contactsRecursionSort(contacts, field) {
       let sortedContacts = _.cloneDeep(contacts)
-      // Видел правило, что нельзя использовать в названиях переменные вроде "a"
+      // Видел правило, что нельзя использовать переменные вроде "a"
       // Но думаю, что это тот самый случай, когда можно
       return sortedContacts
         .sort((a , b) => a[field].toLowerCase().localeCompare(b[field].toLowerCase()))
@@ -58,7 +58,7 @@ export default {
         this.activeSortField = sortField
     },
     getContactList() {
-      this.$store.dispatch('contacts/getContactInLocalStorage')
+      this.$store.dispatch('contacts/getContactsFromLocalStorage')
     }
   }
 

@@ -90,18 +90,18 @@ export default {
       commit('addContact', contact)
       // Настоящий запрос я бы выполнил первым
       // а тут у нас клиент как источник истины
-      dispatch('setContactInLocalStorage')
+      dispatch('setContactsInLocalStorage')
     },
-    setContactInLocalStorage({state}) {
+    setContactsInLocalStorage({state}) {
       localStorage.setItem('contacts', JSON.stringify(state.contacts))
     },
-    getContactInLocalStorage({commit}) {
+    getContactsFromLocalStorage({commit}) {
       let contactList = localStorage.getItem('contacts')
       if(contactList)
-        commit('setContactList', JSON.parse(contactList))
+        commit('setContacts', JSON.parse(contactList))
     },
     mockContacts({commit, state}) {
-      commit('setContactList', MOCK_CONTACTS)
+      commit('setContacts', MOCK_CONTACTS)
       localStorage.setItem('contacts', JSON.stringify(state.contacts))
     }
   },
@@ -132,7 +132,7 @@ export default {
         state.contacts.push(formatContact)
       }
     },
-    setContactList(state, contacts) {
+    setContacts(state, contacts) {
       state.contacts = _.cloneDeep(contacts)
     }
   }
